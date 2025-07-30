@@ -1,0 +1,15 @@
+title Authentication Sequence
+
+Consumer->Gateway:Request for internal service
+Gateway->User verification: Check credentials
+User verification->User DB: retrieve user information
+User verification<--User DB:
+note over User verification:Check user credentials
+User verification->User DB:get usage
+note over User DB: stored procedure aggregates usage
+User verification<--User DB:
+Gateway<--User verification:
+note over Gateway:Decide if usage is within limts
+Gateway->Internal service:Consumer request forwarded
+Gateway<--Internal service:
+Consumer<--Gateway:
