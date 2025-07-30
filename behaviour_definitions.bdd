@@ -1,0 +1,144 @@
+Given
+An incoming request
+When
+The request has no authentication information
+Then
+The system responds with a 400 code
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information does not map to a known user
+Then
+The system responds with a 401 code
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known free tier user
+And
+The user has not made 100 requests in the month
+And
+The user has not made 2 requests in the last second
+And
+The request is not well formed for the desired service
+Then
+The request is forwarded to the appropriate API
+And
+The request is logged in the database to the user
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known free tier user
+And
+The user has not made 100 requests in the month
+And
+The user has not made 2 requests in the last second
+Then
+The request is forwarded to the appropriate API
+And
+The request is logged in the database to the user
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known free tier user
+And
+The user has not made 100 requests in the month
+And
+The user has made 2 requests in the last second
+Then
+The system responds with a 429 code
+And
+A retry-after header of 1s
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known free tier user
+And
+The user has made 100 requests in the month
+Then
+The system responds with a 429 code
+And
+no retry-after header
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known pro tier user
+And
+The user has not made 100,000 requests in the month
+And
+The user has not made 10 requests in the last second
+And
+The request is not well formed for the desired service
+Then
+The request is forwarded to the appropriate API
+And
+The request is logged in the database to the user
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known pro tier user
+And
+The user has not made 100,000 requests in the month
+And
+The user has not made 10 requests in the last second
+Then
+The request is forwarded to the appropriate API
+And
+The request is logged in the database to the user
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known pro tier user
+And
+The user has not made 100,000 requests in the month
+And
+The user has made 10 requests in the last second
+Then
+The system responds with a 429 code
+And
+A retry-after header of 1s
+
+
+Given
+An incoming request
+When
+The request has authentication information
+And
+The information maps to a known pro tier user
+And
+The user has made 100,000 requests in the month
+Then
+The system responds with a 429 code
+And
+no retry-after header
