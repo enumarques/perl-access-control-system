@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS User (
+	UserId BLOB PRIMARY KEY,
+	Name VARCHAR(100),
+	APIKey VARCHAR(256),
+	Salt VARCHAR(256),
+	CustomerId BLOB,
+	TierId INT,
+	FOREIGN KEY (TierId) REFERENCES Tier(TierId)
+);
+
+CREATE TABLE IF NOT EXISTS Tier (
+	TierId INT PRIMARY KEY,
+	Name VARCHAR(30),
+	MonthlyLimit INT,
+	RateLimit INT
+);
+
+CREATE TABLE IF NOT EXISTS Customer (
+	CustomerId BLOB PRIMARY KEY,
+	Name VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS UsageLog (
+	UsageLogId BLOB PRIMARY KEY,
+	UserId BLOB, 
+	CustomerId BLOB,
+	Endpoint VARCHAR(2048),
+	RequestTime TimeStamp,
+	FOREIGN KEY (UserId) REFERENCES User(UserId),
+	FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
+);
