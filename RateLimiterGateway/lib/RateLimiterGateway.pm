@@ -44,6 +44,33 @@ __PACKAGE__->config(
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 1, # Send X-Catalyst header
     encoding => 'UTF-8', # Setup request decoding and response encoding
+
+    'Plugin::Authentication' => {
+        default_realm => 'apikey',
+        realms => {
+            apikey => {
+                # This tells the plugin how to get credentials from the request.
+                credential => {
+                    class => "APIKey",
+                    header_name => 'X-API-KEY',
+                },
+                # This tells the plugin how to validate the credentials.
+                store => {
+                    class      => 'DBIx::Class',
+                    user_model => 'GatewayModel::User', # The Catalyst Model name
+                    user_class => 'User', # The name of the ResultSet
+                    id_field   => 'apikey', # The column to check the key against
+                },
+                # This handles what to do if authentication fails.
+                on_failure => sub {
+                    my $c = shift;
+                    $c->response->status(401);
+                    $c->response->body('Unauthorized: Invalid API Key');
+                    $c->detach;
+                },
+            },
+        },
+    },
 );
 
 # Start the application

@@ -5,15 +5,8 @@ use Test::More;
 
 use Catalyst::Test 'RateLimiterGateway';
 
-# ok( request('/')->is_success, 'Request should succeed' );
+ok( request('/')->code == 401, 'Bad request from unauthenticated request' );
 
-# Given
-# An incoming request
-# When
-# The request has no authentication information
-# Then
-# The system responds with a 400 code
-ok( request('')->code() == 400, 'Request is missing authentication information' );
 
 
 

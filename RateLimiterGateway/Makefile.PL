@@ -14,6 +14,8 @@ requires 'Catalyst::Runtime' => '5.90132';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Plugin::Authentication';
+requires 'Catalyst::Authentication::Store::DBIx::Class';
+requires 'Catalyst::Authentication::Credential::APIKey';
 requires 'Catalyst::Plugin::Authorization::Roles';
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
