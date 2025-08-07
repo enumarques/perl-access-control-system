@@ -3,7 +3,7 @@ An incoming request
 When
 The request has no authentication information
 Then
-The system responds with a 400 code
+The system responds with a 401 code
 
 
 Given
